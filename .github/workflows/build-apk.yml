@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-apk:
-    name: Build Debug APK
+    name: Build Standalone Release APK
     runs-on: ubuntu-latest
 
     steps:
@@ -32,15 +32,15 @@ jobs:
       - name: ⚙️ Generate Android Project (Expo Prebuild)
         run: npx expo prebuild --platform android --clean
 
-      - name: 🔨 Compile APK with Gradle
+      - name: 🔨 Compile Standalone APK with Gradle
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon --stacktrace
+          ./gradlew assembleRelease --no-daemon --stacktrace
 
       - name: 🚀 Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Berkas-Mobile-v1.0-Debug
-          path: android/app/build/outputs/apk/debug/*.apk
+          name: Berkas-Mobile-v1.0-Release
+          path: android/app/build/outputs/apk/release/*.apk
           retention-days: 14
